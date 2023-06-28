@@ -45,8 +45,8 @@ const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements
 
 const shuffleArray = (elements) => {
   for (let i = elements.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let temp = elements[i];
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = elements[i];
     elements[i] = elements[j];
     elements[j] = temp;
   }
@@ -72,4 +72,4 @@ const createPost = () => ({
 
 const createPosts = () => Array.from({length: POST_COUNTER}, createPost);
 
-console.log(createPosts());
+export {createPosts};
