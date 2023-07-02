@@ -1,15 +1,14 @@
-const compareStringLength = (string, maxLength) => string.length <= maxLength;
-
-compareStringLength ('проверяемая строка', 20);
-
-const isPalindrome = (string) => {
-  string = string.toLowerCase().replaceAll(' ', '');
-  return string === string.split ('').reverse().join('');
+const getMinutes = (string) => {
+  const times = string.split(':');
+  return Number(times[0]) * 60 + Number(times[1]);
 };
 
-isPalindrome ('Лёша на полке клопа нашёл ');
+const checkTime = (dayBegin, dayEnd, startTime, duration) => {
+  const dayStartMinutes = getMinutes(dayBegin);
+  const dayEndMinutes = getMinutes(dayEnd);
+  const meetingEndMinutes = getMinutes(startTime) + duration;
 
+  return dayStartMinutes <= dayEndMinutes && meetingEndMinutes <= dayEndMinutes;
+};
 
-const extractingNumbers = (string) => parseInt(String(string.replace(/\D/g, '')), 10);
-
-extractingNumbers ('ECMAScript 2022');
+checkTime('8:00', '17:30', '08:00', 900);
