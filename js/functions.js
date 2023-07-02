@@ -1,3 +1,5 @@
+// Функция сравнения рабочего дня и продолжительности встречи.
+
 const getMinutes = (string) => {
   const times = string.split(':');
   return Number(times[0]) * 60 + Number(times[1]);
