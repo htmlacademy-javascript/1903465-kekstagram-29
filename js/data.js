@@ -39,7 +39,7 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-let postId = 1;
+let postID = 1;
 let commentId = 1;
 
 const createMessage = (elements) => shuffleArray(elements).slice(0, getRandomNumber(1, 2)).join(' ');
@@ -52,8 +52,8 @@ const createComment = () => ({
 });
 
 const createPost = () => ({
-  id: postId,
-  url: `photos/${postId++}.jpg`,
+  id: postID,
+  url: `photos/${postID++}.jpg`,
   likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
   description: getRandomArrayElement(DESCRIPTIONS),
   comments:Array.from({length: getRandomNumber(MIN_COUNT_OF_COMMENTS, MAX_COUNT_OF_COMMENTS)}, createComment)

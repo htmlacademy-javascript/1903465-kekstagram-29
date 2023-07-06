@@ -1,2 +1,3 @@
-import './data.js';
-import './utils.js';
+import {renderPhotos} from './render-posts.js';
+
+renderPhotos();
