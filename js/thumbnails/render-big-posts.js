@@ -1,15 +1,15 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey} from '../utils/utils.js';
 
 const COMMENTS_COUNTER = 5;
 
 const pictureContainer = document.querySelector('.big-picture');
-const bigImage = pictureContainer.querySelector('img');
+const bigImage = document.querySelector('img');
 const socialCaption = document.querySelector('.social__caption');
 const likesCount = document.querySelector('.likes-count');
 const pictureCancel = document.querySelector('.big-picture__cancel');
 const commentsLoader = document.querySelector('.comments-loader');
 const socialCommentCount = document.querySelector('.social__comment-count');
-const socialComments = pictureContainer.querySelector('.social__comments');
+const socialComments = document.querySelector('.social__comments');
 const socialComment = document.querySelector('.social__comment');
 
 let comments = [];
