@@ -46,6 +46,7 @@ const pristineInit = () => {
   pristine.addValidator(imageDescription, checkCommentLength, COMMENT_LENGTH_INVALID, 1, true);
   pristine.addValidator(imageHashtags, checkHachtags, HASHTAG_INVALID, 1, true);
   pristine.addValidator(imageHashtags, checkHachtagsCount, HASHTAG_COUNT_INVALID, 1, true);
-  pristine.addValidator(imageHashtags, checkSimilarHachtags, HASHTAG_REPEAT_INVALID, 1, true);};
+  pristine.addValidator(imageHashtags, checkSimilarHachtags, HASHTAG_REPEAT_INVALID, 1, true);
+};
 
 export {pristineInit, pristineReset, pristineValidate};
