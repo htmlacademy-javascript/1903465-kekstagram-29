@@ -14,4 +14,6 @@ const shuffleArray = (elements) => {
 
 const isEscapeKey = (event) => event.key === 'Escape';
 
-export {getRandomNumber, getRandomArrayElement, shuffleArray, isEscapeKey};
+const isNotInput = (event) => !event.target.closest('input') || !event.target.closest('textarea');
+
+export {getRandomNumber, getRandomArrayElement, shuffleArray, isEscapeKey, isNotInput};
