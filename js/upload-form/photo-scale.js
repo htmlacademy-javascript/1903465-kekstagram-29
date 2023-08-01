@@ -15,7 +15,7 @@ const changeScale = (value) => {
   scaleValue.value = `${value}%`;
 };
 
-const scaleSmallerClickHandlder = (event) => {
+const scaleSmallerClickHandler = (event) => {
   event.preventDefault();
   if (currentScale > MIN_SCALE) {
     currentScale -= SCALE_STEP;
@@ -23,7 +23,7 @@ const scaleSmallerClickHandlder = (event) => {
   }
 };
 
-const scaleBiggerClickHandlder = (event) => {
+const scaleBiggerClickHandler = (event) => {
   event.preventDefault();
   if (currentScale < MAX_SCALE) {
     currentScale += SCALE_STEP;
@@ -32,8 +32,8 @@ const scaleBiggerClickHandlder = (event) => {
 };
 
 const initScale = () => {
-  scaleSmaller.addEventListener('click', scaleSmallerClickHandlder);
-  scaleBigger.addEventListener('click', scaleBiggerClickHandlder);
+  scaleSmaller.addEventListener('click', scaleSmallerClickHandler);
+  scaleBigger.addEventListener('click', scaleBiggerClickHandler);
 };
 
 const resetScale = () => {

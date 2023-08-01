@@ -78,10 +78,7 @@ function uploadFormSubmitHandler(event) {
   }
 }
 
-const uploadInputChangeHandler = (event) => {
-  renderUploadImage(event);
-  openModal();
-};
+const uploadInputChangeHandler = (event) => renderUploadImage(event);
 
 const initUploadForm = () => {
   pristineInit();
@@ -93,4 +90,4 @@ const initUploadForm = () => {
   effectsList.addEventListener('change', effectsListChangeHandler);
 };
 
-export {initUploadForm};
+export {initUploadForm, openModal};
