@@ -3,7 +3,7 @@ import {isEscapeKey} from '../utils/utils.js';
 const COMMENTS_COUNTER = 5;
 
 const pictureContainer = document.querySelector('.big-picture');
-const bigImage = document.querySelector('img');
+const bigImage = document.querySelector('.big-picture__img img');
 const socialCaption = document.querySelector('.social__caption');
 const likesCount = document.querySelector('.likes-count');
 const pictureCancel = document.querySelector('.big-picture__cancel');
@@ -63,7 +63,7 @@ const setButtonState = () => {
     commentsLoader.classList.add('hidden');
     return;
   }
-  commentsLoader.classList.remove('hiddent');
+  commentsLoader.classList.remove('hidden');
 };
 
 const fillComments = () => {
@@ -81,6 +81,7 @@ function commentsLoaderClickHandler(event) {
 
 const fillBigPicture = (post) => {
   bigImage.src = post.url;
+  bigImage.alt = post.description;
   socialCaption.textContent = post.description;
   likesCount.textContent = post.likes;
 };

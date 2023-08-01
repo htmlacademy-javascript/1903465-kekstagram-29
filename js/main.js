@@ -1,5 +1,5 @@
-import {renderPhotos} from './thumbnails/render-posts.js';
+import {initPosts} from './posts/init-posts.js';
 import {initUploadForm} from './upload-form/upload-form.js';
 
-renderPhotos();
+initPosts();
 initUploadForm();

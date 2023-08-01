@@ -9,43 +9,43 @@ const COMMENT_LENGTH_INVALID = `Не более ${MAX_COMMENT_LENGTH} симво
 const uploadForm = document.querySelector('.img-upload__form');
 const imageHashtags = document.querySelector('.text__hashtags');
 const imageDescription = document.querySelector('.text__description');
+
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper'
+  errorTextParent: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--invalid',
 });
 
-const createHashtags = (value) => (value.trim().toLowerCase().split(' '));
+const createHashtags = (value) => value.trim().toLowerCase().split(' ').filter((item) => item);
 
-const checkHachtags = (value) => {
+const checkHashtags = (value) => {
   if (!value) {
     return true;
   }
   const hashtags = createHashtags(value);
-  const check = hashtags.every((element) => (element.match(REGEXP)));
-  return check;
+  return hashtags.every((element) => element.match(REGEXP));
 };
 
-const checkHachtagsCount = (value) => (value.split(' ').length <= MAX_HASHTAGS_COUNT);
+const checkHashtagsCount = (value) => {
+  const hashtags = createHashtags(value);
+  return hashtags.length <= MAX_HASHTAGS_COUNT;
+};
 
 const checkSimilarHachtags = (value) => {
   const hashtags = createHashtags(value);
   return hashtags.length === new Set(hashtags).size;
 };
 
-const checkCommentLength = (value) => (value.length <= MAX_COMMENT_LENGTH);
+const checkCommentLength = (value) => value.length <= MAX_COMMENT_LENGTH;
 
-const pristineValidate = () => {
-  pristine.validate();
-};
+const pristineValidate = () => pristine.validate();
 
-const pristineReset = () => {
-  pristine.reset();
-};
+const pristineReset = () => pristine.reset();
 
 const pristineInit = () => {
   pristine.addValidator(imageDescription, checkCommentLength, COMMENT_LENGTH_INVALID, 1, true);
-  pristine.addValidator(imageHashtags, checkHachtags, HASHTAG_INVALID, 1, true);
-  pristine.addValidator(imageHashtags, checkHachtagsCount, HASHTAG_COUNT_INVALID, 1, true);
+  pristine.addValidator(imageHashtags, checkHashtags, HASHTAG_INVALID, 1, true);
+  pristine.addValidator(imageHashtags, checkHashtagsCount, HASHTAG_COUNT_INVALID, 1, true);
   pristine.addValidator(imageHashtags, checkSimilarHachtags, HASHTAG_REPEAT_INVALID, 1, true);
 };
 
