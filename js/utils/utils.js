@@ -16,4 +16,13 @@ const isEscapeKey = (event) => event.key === 'Escape';
 
 const isNotInput = (event) => !event.target.closest('input') || !event.target.closest('textarea');
 
-export {getRandomNumber, getRandomArrayElement, shuffleArray, isEscapeKey, isNotInput};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomNumber, getRandomArrayElement, shuffleArray, isEscapeKey, isNotInput, debounce};

@@ -1,68 +1,96 @@
-import {isEscapeKey, isNotInput} from '../utils/utils.js';
-import {initScale, resetScale} from './scale.js';
-import { initSlider, updateSlider } from './filters.js';
+import {isEscapeKey} from '../utils/utils.js';
+import {initScale, resetScale} from './photo-scale.js';
+import {setUpdateOptions, createSlider} from './photo-filters.js';
 import {pristineInit, pristineReset, pristineValidate} from './validate.js';
+import {renderMessage} from '../utils/messages.js';
+import {sendData} from '../utils/api.js';
+import {renderUploadImage} from './upload-image.js';
 
+const SEND_URL = 'https://29.javascript.pages.academy/kekstagram/';
+const SUCCESS_STATE = 'success';
+const SUCCESS_MESSAGE = 'Изображение успешно загружено';
+const SUCCESS_BUTTON_TEXT = 'Круто!';
+const ERROR_STATE = 'error';
+const ERROR_MESSAGE = 'Ошибка загрузки файла';
+const ERROR_BUTTON_TEXT = 'Попробовать ещё раз';
 
-const uploadInput = document.querySelector('.img-upload__input');
 const uploadForm = document.querySelector('.img-upload__form');
+const uploadInput = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('.img-upload__cancel');
-const filterList = document.querySelector('.effects__list');
-const defaultFilter = document.querySelector('input[checked].effects__radio').value;
+const effectsList = document.querySelector('.effects__list');
+const currentEffectValue = effectsList.querySelector('input:checked').value;
+const submitButton = document.querySelector('.img-upload__submit');
 
-const filterListChangeHandler = (event) => {
-  updateSlider(event.target.value);
+const setSubmitButtonStatus = (state) => {
+  submitButton.disabled = state;
 };
 
-const openUploadForm = () => {
+const effectsListChangeHandler = (event) => setUpdateOptions(event.target.value);
+
+const openModal = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', documentKeydownHandler);
-  closeButton.addEventListener('click', closeButtonClickHandler);
-  filterList.addEventListener('change', filterListChangeHandler);
 };
 
-const closeUploadForm = () => {
-  resetScale();
-  pristineReset();
-  updateSlider(defaultFilter);
+const closeModal = () => {
   uploadForm.reset();
+  pristineReset();
+  resetScale();
+  setUpdateOptions(currentEffectValue);
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', documentKeydownHandler);
-  closeButton.removeEventListener('click', closeButtonClickHandler);
-  filterList.removeEventListener('change', filterListChangeHandler);
 };
 
-const uploadInputChangeHandler = () => openUploadForm();
-
-function closeButtonClickHandler(event) {
+const closeButtonClickHandler = (event) => {
   event.preventDefault();
-  closeUploadForm();
+  closeModal();
+};
+
+function documentKeydownHandler(event) {
+  const textHashtags = event.target.closest('.text__hashtags');
+  const textDescription = event.target.closest('.text__description');
+  const errorContainer = document.querySelector('.error');
+  if (isEscapeKey(event) && !textHashtags && !textDescription && !errorContainer) {
+    event.preventDefault();
+    closeModal();
+  }
 }
+
+const onSuccess = () => {
+  closeModal();
+  renderMessage(SUCCESS_STATE, SUCCESS_MESSAGE, SUCCESS_BUTTON_TEXT);
+  setSubmitButtonStatus(false);
+};
+
+const onError = () => {
+  renderMessage(ERROR_STATE, ERROR_MESSAGE, ERROR_BUTTON_TEXT);
+  setSubmitButtonStatus(false);
+};
 
 function uploadFormSubmitHandler(event) {
   event.preventDefault();
-
   if (pristineValidate()) {
-    closeUploadForm();
+    setSubmitButtonStatus(true);
+    sendData(SEND_URL, onSuccess, onError, new FormData(event.target));
   }
 }
 
-function documentKeydownHandler (event) {
-  if(isEscapeKey(event) && isNotInput(event)) {
-    event.preventDefault();
-    closeUploadForm();
-  }
-}
+const uploadInputChangeHandler = (event) => {
+  renderUploadImage(event);
+  openModal();
+};
 
 const initUploadForm = () => {
-  initScale();
   pristineInit();
-  initSlider(defaultFilter);
-  uploadForm.addEventListener('submit', uploadFormSubmitHandler);
+  initScale();
+  createSlider(currentEffectValue);
   uploadInput.addEventListener('change', uploadInputChangeHandler);
+  uploadForm.addEventListener('submit', uploadFormSubmitHandler);
+  closeButton.addEventListener('click', closeButtonClickHandler);
+  effectsList.addEventListener('change', effectsListChangeHandler);
 };
 
 export {initUploadForm};
